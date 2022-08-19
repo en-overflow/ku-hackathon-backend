@@ -1,0 +1,10 @@
+version: '3'
+services:
+  dev-db:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=en
+      - POSTGRES_PASSWORD=en
+      - POSTGRES_DB=en
