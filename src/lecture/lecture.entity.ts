@@ -3,7 +3,10 @@ import {
   BaseEntity,
   Column,
   Entity,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Category, Level, Status } from './lecture.types';
@@ -39,8 +42,14 @@ export class Lecture extends BaseEntity {
   @Column({ type: 'enum', enum: Status, default: Status.PENDING })
   status: Status;
 
-  //   @OneToMany((type) => User, (user) => user.registerLectures)
-  //   student: User[];
+  @ManyToMany((type) => User, (user) => user.likeLectures)
+  liked: User[];
+
+  @OneToMany((type) => User, (user) => user.registerLectures)
+  student: User[];
+
+  @ManyToOne((type) => User, (user) => user.openLectures)
+  instructor: User;
 
   //   @OneToMany((type) => Photo, (user) => photo.lectures)
   //   student: Photo[];
