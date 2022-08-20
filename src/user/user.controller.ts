@@ -43,4 +43,19 @@ export class UserController {
   async deleteUser(@Param('id') id: number) {
     return this.userService.deleteUser(id);
   }
+
+  @Get('/likes/:id')
+  async fetchLikeLectures(@Param('id') id: number) {
+    return this.userService.fetchLikeLectures(id);
+  }
+
+  @Get('/register/:id')
+  async fetchRegisterLectures(@Param('id') id: number) {
+    return this.userService.fetchRegisterLectures(id);
+  }
+
+  @Get('/open/:id')
+  async fetchOpenLectures(@Param('id') id: number) {
+    return this.userService.fetchLikeLectures(id);
+  }
 }
