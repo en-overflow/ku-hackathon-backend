@@ -34,7 +34,7 @@ export class UserController {
     return this.userService.updateUser(params);
   }
 
-  @Put()
+  @Put('/role')
   async updateRole(@Body() params: UpdateRoleDto) {
     return this.userService.updateRole(params);
   }

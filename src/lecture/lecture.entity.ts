@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -42,13 +43,23 @@ export class Lecture extends BaseEntity {
   @Column({ type: 'enum', enum: Status, default: Status.PENDING })
   status: Status;
 
-  @ManyToMany((type) => User, (user) => user.likeLectures)
+  @ManyToMany((type) => User, (user) => user.likeLectures, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable()
   liked: User[];
 
-  @OneToMany((type) => User, (user) => user.registerLectures)
+  @OneToMany((type) => User, (user) => user.registerLectures, {
+    cascade: true,
+    nullable: true,
+  })
   students: User[];
 
-  @ManyToOne((type) => User, (user) => user.openLectures)
+  @ManyToOne((type) => User, (user) => user.openLectures, {
+    cascade: true,
+    nullable: true,
+  })
   instructor: User;
 
   //   @OneToMany((type) => Photo, (user) => photo.lectures)

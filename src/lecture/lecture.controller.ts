@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 
 import { CreateUserDto } from 'src/user/user.dto';
 import {
@@ -48,8 +57,8 @@ export class LectureController {
     return this.lectureService.registerLecture(params);
   }
 
-  @Put('/register/:id')
-  async cancelRegisterLecture(@Param() params: CancelRegisterLectureDto) {
+  @Delete('/register')
+  async cancelRegisterLecture(@Body() params: CancelRegisterLectureDto) {
     return this.lectureService.cancelRegisterLecture(params);
   }
 
@@ -58,8 +67,8 @@ export class LectureController {
     return this.lectureService.likeLecture(params);
   }
 
-  @Put('/likes/:id')
-  async cancelLikeLecture(@Param() params: CancelLikeLectureDto) {
+  @Delete('/likes')
+  async cancelLikeLecture(@Body() params: CancelLikeLectureDto) {
     return this.lectureService.cancelLikeLecture(params);
   }
 

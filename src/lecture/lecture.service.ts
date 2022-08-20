@@ -11,7 +11,6 @@ import {
   InspectLectureParams,
   LikeLectureParams,
   RegisterLectureParams,
-  SearchLectureDto,
   SearchLectureParams,
   UpdateLectureStatusParams,
 } from './lecture.dto';
@@ -34,12 +33,16 @@ export class LectureService {
     });
 
     const lecture = this.lectureRepository.create(lectureParams);
+    lecture.liked = [];
+    lecture.students = [];
     lecture.instructor = instructor;
-    return this.lectureRepository.insert(params);
+    return this.lectureRepository.insert(lecture);
   }
 
   async fetchLectures() {
-    return this.lectureRepository.find();
+    return this.lectureRepository.find({
+      relations: ['liked', 'students', 'instructor'],
+    });
   }
 
   async fetchLecturesByFilter(params: FilterLectureParams) {
@@ -49,14 +52,14 @@ export class LectureService {
   async fetchLecturesBySearch(params: SearchLectureParams) {
     const lectures = await this.lectureRepository.find();
     const searchedLectures = lectures.filter((lecture) => {
-      lecture.title.indexOf(params.name) != -1;
+      return lecture.title.indexOf(params.name) != -1;
     });
 
     return searchedLectures;
   }
 
   async inspectLecture(params: InspectLectureParams) {
-    return this.lectureRepository.findOne({ where: params });
+    return this.lectureRepository.findOne({ where: { id: params.id } });
   }
 
   async registerLecture(params: RegisterLectureParams) {
@@ -66,6 +69,7 @@ export class LectureService {
     });
     const lecture = await this.lectureRepository.findOne({
       where: { id: lectureId },
+      relations: ['students'],
     });
 
     lecture.students = [...lecture.students, newStudent];
@@ -77,8 +81,8 @@ export class LectureService {
     const { lectureId, studentId } = params;
     const lecture = await this.lectureRepository.findOne({
       where: { id: lectureId },
+      relations: ['students'],
     });
-
     lecture.students = lecture.students.filter(
       (student) => student.id != studentId,
     );
@@ -93,9 +97,10 @@ export class LectureService {
     });
     const lecture = await this.lectureRepository.findOne({
       where: { id: lectureId },
+      relations: ['liked'],
     });
 
-    lecture.liked = [...lecture.students, student];
+    lecture.liked = [...lecture.liked, student];
 
     return this.lectureRepository.save(lecture);
   }
@@ -105,6 +110,7 @@ export class LectureService {
 
     const lecture = await this.lectureRepository.findOne({
       where: { id: lectureId },
+      relations: ['liked'],
     });
 
     lecture.liked = lecture.liked.filter((student) => student.id != studentId);
