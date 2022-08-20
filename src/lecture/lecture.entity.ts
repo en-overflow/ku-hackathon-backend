@@ -46,7 +46,7 @@ export class Lecture extends BaseEntity {
   liked: User[];
 
   @OneToMany((type) => User, (user) => user.registerLectures)
-  student: User[];
+  students: User[];
 
   @ManyToOne((type) => User, (user) => user.openLectures)
   instructor: User;

@@ -1,23 +1,16 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import { query } from 'express';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+
 import { CreateUserDto } from 'src/user/user.dto';
 import {
   CancelLikeLectureDto,
   CancelRegisterLectureDto,
+  CreateLectureDto,
   FilterLectureDto,
   InspectLectureDto,
   LikeLectureDto,
   RegisterLectureDto,
   SearchLectureDto,
+  UpdateLectureStatusDto,
 } from './lecture.dto';
 import { LectureService } from './lecture.service';
 
@@ -26,7 +19,7 @@ export class LectureController {
   constructor(private readonly lectureService: LectureService) {}
 
   @Post()
-  async createLecture(@Body() params: CreateUserDto) {
+  async createLecture(@Body() params: CreateLectureDto) {
     return this.lectureService.createLecture(params);
   }
 
@@ -68,5 +61,10 @@ export class LectureController {
   @Put('/likes/:id')
   async cancelLikeLecture(@Param() params: CancelLikeLectureDto) {
     return this.lectureService.cancelLikeLecture(params);
+  }
+
+  @Post('/status')
+  async updateStatusLecture(@Body() params: UpdateLectureStatusDto) {
+    return this.lectureService.updateStatusLecture(params);
   }
 }

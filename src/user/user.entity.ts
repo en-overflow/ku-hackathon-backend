@@ -45,7 +45,7 @@ export class User extends BaseEntity {
   @ManyToMany((type) => Lecture, (lecture) => lecture.liked)
   likeLectures: Lecture[];
 
-  @ManyToOne((type) => Lecture, (lecture) => lecture.student)
+  @ManyToOne((type) => Lecture, (lecture) => lecture.students)
   registerLectures: Lecture[];
 
   // Establish

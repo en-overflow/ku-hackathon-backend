@@ -1,51 +1,71 @@
-import { Category } from './lecture.types';
+import { Category, Level, Status } from './lecture.types';
 
 export class CreateLectureDto {
+  instructorId: number;
   title: string;
   description: string;
   dueDate: Date;
-  pictures: string[];
+  //   pictures: string[];
+  price: number;
+  location: string;
+  level: Level;
+  category: Category;
 }
 
 export interface CreateLectureParams {
+  instructorId: number;
   title: string;
   description: string;
   dueDate: Date;
-  pictures: string[];
+  //   pictures: string[];
+  price: number;
+  location: string;
+  level: Level;
+  category: Category;
 }
 
 export class RegisterLectureDto {
-  id: number;
+  lectureId: number;
+  studentId: number;
 }
 
 export class RegisterLectureParams {
-  id: number;
-}
-
-export class LikeLectureDto {
-  id: number;
-}
-
-export class LikeLectureParams {
-  id: number;
+  lectureId: number;
+  studentId: number;
 }
 
 export class CancelRegisterLectureDto {
-  id: number;
+  lectureId: number;
+  studentId: number;
 }
 
 export interface CancelRegisterLectureParams {
-  id: number;
+  lectureId: number;
+  studentId: number;
+}
+export class LikeLectureDto {
+  lectureId: number;
+  studentId: number;
+}
+
+export class LikeLectureParams {
+  lectureId: number;
+  studentId: number;
 }
 export class CancelLikeLectureDto {
-  id: number;
+  lectureId: number;
+  studentId: number;
 }
 
 export interface CancelLikeLectureParams {
-  id: number;
+  lectureId: number;
+  studentId: number;
 }
 
 export class SearchLectureDto {
+  name: string;
+}
+export class SearchLectureParams {
   name: string;
 }
 
@@ -64,4 +84,14 @@ export class InspectLectureDto {
 
 export interface InspectLectureParams {
   id: number;
+}
+
+export class UpdateLectureStatusDto {
+  id: number;
+  status?: Status;
+}
+
+export interface UpdateLectureStatusParams {
+  id: number;
+  status?: Status;
 }
