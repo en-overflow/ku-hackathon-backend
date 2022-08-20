@@ -6,17 +6,31 @@ import {
   Param,
   Post,
   Put,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateRoleDto, UpdateUserDto } from './user.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { PhotoService } from 'src/photo/photo.service';
+import { CreateUserDto, CreateUserParams, UpdateRoleDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('/api/user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+    private photoService: PhotoService) {}
 
   @Post()
-  async createUser(@Body() params: CreateUserDto) {
-    return this.userService.createUser(params);
+  @UseInterceptors(FilesInterceptor('file'))
+  async createUser(@UploadedFiles() files, @Body() params: CreateUserDto) {
+    const locations = await this.photoService.upload(files);
+    const userParams: CreateUserParams = {
+      age: params.age,
+      name: params.name,
+      nickName: params.nickName,
+      phoneNumber: params.nickName,
+      photoUrl: locations[0]
+    };
+    return this.userService.createUser(userParams);
   }
 
   @Get(':id')

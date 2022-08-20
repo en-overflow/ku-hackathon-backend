@@ -6,11 +6,15 @@ export class PhotoService {
     constructor() {}
     
     async upload(files) {
+        let locations = [];
+        
         for(const file of files) {
             const {originalname} = file;
             const bucketS3 = 'en-overflow';
-            await this.uploadS3(file.buffer, bucketS3, originalname);
+            const s3JsonData = await this.uploadS3(file.buffer, bucketS3, originalname);
+            locations.push(s3JsonData["Location"]);
         }
+        return locations;
     }
 
     async uploadS3(file, bucket, name) {
@@ -25,7 +29,6 @@ export class PhotoService {
                 if(err) {
                     reject(err.message);
                 }
-                console.log(data);
                 resolve(data);
             });
         })

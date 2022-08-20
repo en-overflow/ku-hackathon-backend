@@ -14,7 +14,6 @@ export class PhotoController {
     @UseInterceptors(FilesInterceptor('file'))
     async upload(@UploadedFiles() files, @Body() data) {
         console.log(data.hi);
-        //console.log(files);
-        //return await this.photoService.upload(files);
+        return await this.photoService.upload(files);
     }
 }

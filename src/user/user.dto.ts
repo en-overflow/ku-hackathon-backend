@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEmpty, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Role } from './user.types';
 
 export class CreateUserDto {
@@ -17,6 +17,7 @@ export class CreateUserDto {
   @IsNumber()
   @IsNotEmpty()
   age: number;
+
 }
 
 export interface CreateUserParams {
@@ -24,6 +25,7 @@ export interface CreateUserParams {
   nickName: string;
   phoneNumber: string;
   age: number;
+  photoUrl: string;
 }
 
 export class UpdateUserDto {

@@ -25,6 +25,9 @@ export class User extends BaseEntity {
   @Column()
   phoneNumber: string;
 
+  @Column()
+  photoUrl: string;
+
   @Column({
     type: 'enum',
     enum: Role,
