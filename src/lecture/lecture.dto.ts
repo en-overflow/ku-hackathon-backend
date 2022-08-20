@@ -17,7 +17,7 @@ export interface CreateLectureParams {
   title: string;
   description: string;
   dueDate: Date;
-  //   pictures: string[];
+  photoUrl: string
   price: number;
   location: string;
   level: Level;

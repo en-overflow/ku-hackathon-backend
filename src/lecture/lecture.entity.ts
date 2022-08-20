@@ -1,3 +1,4 @@
+import { Photo } from 'src/photo/entity/photo.entity';
 import { User } from 'src/user/user.entity';
 import {
   BaseEntity,
@@ -30,6 +31,9 @@ export class Lecture extends BaseEntity {
 
   @Column()
   price: number;
+  
+  @Column()
+  photoUrl: string;
 
   @Column()
   location: string;
@@ -63,6 +67,4 @@ export class Lecture extends BaseEntity {
   })
   instructor: User;
 
-  //   @OneToMany((type) => Photo, (user) => photo.lectures)
-  //   student: Photo[];
 }

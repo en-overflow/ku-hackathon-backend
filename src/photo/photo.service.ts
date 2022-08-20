@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import {S3} from 'aws-sdk';
+import { Photo } from './entity/photo.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PhotoService {

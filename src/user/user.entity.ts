@@ -45,19 +45,13 @@ export class User extends BaseEntity {
   //   @OneToOne((type) => Photo, (photo) => photo.user)
   //   photo: Photo;
 
-  @ManyToMany((type) => Lecture, (lecture) => lecture.liked, {
-    cascade: ['insert'],
-  })
+  @ManyToMany((type) => Lecture, (lecture) => lecture.liked)
   likeLectures: Lecture[];
 
-  @ManyToMany((type) => Lecture, (lecture) => lecture.students, {
-    cascade: ['insert'],
-  })
+  @ManyToOne((type) => Lecture, (lecture) => lecture.students)
   registerLectures: Lecture[];
 
   // Establish
-  @OneToMany((type) => Lecture, (lecture) => lecture.instructor, {
-    cascade: ['insert'],
-  })
+  @OneToMany((type) => Lecture, (lecture) => lecture.instructor)
   openLectures: Lecture[];
 }

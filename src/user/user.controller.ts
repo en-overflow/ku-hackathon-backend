@@ -28,7 +28,7 @@ export class UserController {
       name: params.name,
       nickName: params.nickName,
       phoneNumber: params.nickName,
-      photoUrl: locations[0]
+      photoUrl: locations[0],
     };
     return this.userService.createUser(userParams);
   }

@@ -7,13 +7,18 @@ import {
   Post,
   Put,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { PhotoService } from 'src/photo/photo.service';
 
 import { CreateUserDto } from 'src/user/user.dto';
 import {
   CancelLikeLectureDto,
   CancelRegisterLectureDto,
   CreateLectureDto,
+  CreateLectureParams,
   FilterLectureDto,
   InspectLectureDto,
   LikeLectureDto,
@@ -25,11 +30,26 @@ import { LectureService } from './lecture.service';
 
 @Controller('/api/lecture')
 export class LectureController {
-  constructor(private readonly lectureService: LectureService) {}
+  constructor(private readonly lectureService: LectureService,
+    private readonly photoService: PhotoService) {}
 
   @Post()
-  async createLecture(@Body() params: CreateLectureDto) {
-    return this.lectureService.createLecture(params);
+  @UseInterceptors(FilesInterceptor('file'))
+  async createLecture(@UploadedFiles() files, @Body() params: CreateLectureDto) {
+    const photoUrls = await this.photoService.upload(files);
+
+    const lectureParams: CreateLectureParams = {
+      instructorId: params.instructorId,
+      title: params.title,
+      description: params.description,
+      dueDate: params.dueDate,
+      photoUrl: photoUrls[0],
+      price: params.price,
+      location: params.location,
+      level: params.level,
+      category: params.category
+    };
+    return this.lectureService.createLecture(lectureParams);
   }
 
   @Get()
