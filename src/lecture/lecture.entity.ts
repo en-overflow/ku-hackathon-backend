@@ -50,10 +50,11 @@ export class Lecture extends BaseEntity {
   @JoinTable()
   liked: User[];
 
-  @OneToMany((type) => User, (user) => user.registerLectures, {
+  @ManyToMany((type) => User, (user) => user.registerLectures, {
     cascade: true,
     nullable: true,
   })
+  @JoinTable()
   students: User[];
 
   @ManyToOne((type) => User, (user) => user.openLectures, {

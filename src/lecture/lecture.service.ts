@@ -59,21 +59,27 @@ export class LectureService {
   }
 
   async inspectLecture(params: InspectLectureParams) {
-    return this.lectureRepository.findOne({ where: { id: params.id } });
+    return this.lectureRepository.findOne({
+      where: { id: params.id },
+      relations: ['liked', 'students', 'instructor'],
+    });
   }
 
   async registerLecture(params: RegisterLectureParams) {
     const { lectureId, studentId } = params;
-    const newStudent = await this.userRepository.findOne({
-      where: { id: studentId },
-    });
     const lecture = await this.lectureRepository.findOne({
       where: { id: lectureId },
       relations: ['students'],
     });
+    console.log(lecture);
+    const newStudent = await this.userRepository.findOne({
+      where: { id: studentId },
+    });
+    console.log(newStudent);
 
     lecture.students = [...lecture.students, newStudent];
 
+    console.log(lecture);
     return this.lectureRepository.save(lecture);
   }
 

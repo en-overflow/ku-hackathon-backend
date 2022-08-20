@@ -19,11 +19,37 @@ export class UserService {
   }
 
   async fetchUsers() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: ['likeLectures', 'registerLectures', 'openLectures'],
+    });
   }
 
   async fetchUser(id: number) {
     return this.userRepository.findOne({ where: { id } });
+  }
+
+  async fetchRegisterLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['registerLectures'],
+    });
+
+    return user.registerLectures;
+  }
+  async fetchLikeLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['likeLectures'],
+    });
+    return user.likeLectures;
+  }
+  async fetchOpenLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['registerLectures'],
+    });
+
+    return user.openLectures;
   }
 
   async updateUser(params: UpdateUserParams) {
@@ -38,31 +64,5 @@ export class UserService {
 
   async deleteUser(id: number) {
     return this.userRepository.delete(id);
-  }
-
-  async fetchLikeLectures(id: number) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      relations: ['likeLectures'],
-    });
-
-    return user.likeLectures;
-  }
-
-  async fetchRegisterLectures(id: number) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      relations: ['registerLectures'],
-    });
-    return user.registerLectures;
-  }
-
-  async fetchOpenLectures(id: number) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      relations: ['openLectures'],
-    });
-
-    return user.openLectures;
   }
 }

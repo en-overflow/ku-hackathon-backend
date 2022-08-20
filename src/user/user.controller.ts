@@ -29,6 +29,19 @@ export class UserController {
     return this.userService.fetchUsers();
   }
 
+  @Get('/register/:id')
+  async fetchRegisterLectures(@Param('id') id: number) {
+    return this.userService.fetchRegisterLectures(id);
+  }
+  @Get('/likes/:id')
+  async fetchLikeLectures(@Param('id') id: number) {
+    return this.userService.fetchLikeLectures(id);
+  }
+  @Get('/open/:id')
+  async fetchOpenLectures(@Param('id') id: number) {
+    return this.userService.fetchOpenLectures(id);
+  }
+
   @Put()
   async updateUser(@Body() params: UpdateUserDto) {
     return this.userService.updateUser(params);
@@ -42,20 +55,5 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param('id') id: number) {
     return this.userService.deleteUser(id);
-  }
-
-  @Get('/likes/:id')
-  async fetchLikeLectures(@Param('id') id: number) {
-    return this.userService.fetchLikeLectures(id);
-  }
-
-  @Get('/register/:id')
-  async fetchRegisterLectures(@Param('id') id: number) {
-    return this.userService.fetchRegisterLectures(id);
-  }
-
-  @Get('/open/:id')
-  async fetchOpenLectures(@Param('id') id: number) {
-    return this.userService.fetchLikeLectures(id);
   }
 }
