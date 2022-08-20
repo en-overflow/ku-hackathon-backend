@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
-import { CreateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
 const serviceMock = {
