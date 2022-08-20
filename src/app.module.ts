@@ -7,7 +7,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { LectureModule } from './lecture/lecture.module';
-
+import { PhotoController } from './photo/photo.controller';
+import { PhotoModule } from './photo/photo.module';
+import { PhotoService } from './photo/photo.service';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -23,8 +25,9 @@ import { LectureModule } from './lecture/lecture.module';
     AuthModule,
     UserModule,
     LectureModule,
+    PhotoModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, PhotoController],
+  providers: [AppService, PhotoService],
 })
 export class AppModule {}
