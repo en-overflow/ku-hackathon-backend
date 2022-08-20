@@ -53,8 +53,10 @@ export class UserService {
   }
 
   async updateUser(params: UpdateUserParams) {
-    const { id, nickName } = params;
-    return this.userRepository.update(id, { nickName });
+    const { id, point } = params;
+    const user = await this.userRepository.findOne({ where: { id } });
+    user.point = point;
+    return this.userRepository.save(user);
   }
 
   async updateRole(params: UpdateRoleParams) {
