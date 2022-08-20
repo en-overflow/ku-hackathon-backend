@@ -27,6 +27,9 @@ export class Lecture extends BaseEntity {
   @Column()
   price: number;
 
+  @Column()
+  location: string;
+
   @Column({ type: 'enum', enum: Level, default: Level.BASIC })
   level: Level;
 
@@ -35,9 +38,6 @@ export class Lecture extends BaseEntity {
 
   @Column({ type: 'enum', enum: Status, default: Status.PENDING })
   status: Status;
-
-  //   @OneToMany((type) => Place, (place) => place.lectures)
-  //   location: Place;
 
   //   @OneToMany((type) => User, (user) => user.registerLectures)
   //   student: User[];
