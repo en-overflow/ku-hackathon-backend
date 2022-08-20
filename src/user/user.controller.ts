@@ -10,7 +10,7 @@ import {
 import { CreateUserDto, UpdateRoleDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('/api/user')
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -34,7 +34,7 @@ export class UserController {
     return this.userService.updateUser(params);
   }
 
-  @Put()
+  @Put('/role')
   async updateRole(@Body() params: UpdateRoleDto) {
     return this.userService.updateRole(params);
   }
@@ -42,5 +42,20 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param('id') id: number) {
     return this.userService.deleteUser(id);
+  }
+
+  @Get('/likes/:id')
+  async fetchLikeLectures(@Param('id') id: number) {
+    return this.userService.fetchLikeLectures(id);
+  }
+
+  @Get('/register/:id')
+  async fetchRegisterLectures(@Param('id') id: number) {
+    return this.userService.fetchRegisterLectures(id);
+  }
+
+  @Get('/open/:id')
+  async fetchOpenLectures(@Param('id') id: number) {
+    return this.userService.fetchLikeLectures(id);
   }
 }

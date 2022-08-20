@@ -1,7 +1,10 @@
+import { Lecture } from 'src/lecture/lecture.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -39,14 +42,13 @@ export class User extends BaseEntity {
   //   @OneToOne((type) => Photo, (photo) => photo.user)
   //   photo: Photo;
 
-  //   // Likes
-  //   @OneToMany((type) => Lecture, (lecture) => lecture.liked)
-  //   likes: Lecture;
-  //   // Register
-  //   @OneToMany((type) => Lecture, (lecture) => lecture.student)
-  //   register: Lecture[];
+  @ManyToMany((type) => Lecture, (lecture) => lecture.liked)
+  likeLectures: Lecture[];
 
-  //   // Establish
-  //   @OneToMany((type) => Lecture, (lecture) => lecture.instructor)
-  //   establish: Lecture[];
+  @ManyToOne((type) => Lecture, (lecture) => lecture.students)
+  registerLectures: Lecture[];
+
+  // Establish
+  @OneToMany((type) => Lecture, (lecture) => lecture.instructor)
+  openLectures: Lecture[];
 }

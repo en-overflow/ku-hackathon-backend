@@ -39,4 +39,30 @@ export class UserService {
   async deleteUser(id: number) {
     return this.userRepository.delete(id);
   }
+
+  async fetchLikeLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['likeLectures'],
+    });
+
+    return user.likeLectures;
+  }
+
+  async fetchRegisterLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['registerLectures'],
+    });
+    return user.registerLectures;
+  }
+
+  async fetchOpenLectures(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['openLectures'],
+    });
+
+    return user.openLectures;
+  }
 }
