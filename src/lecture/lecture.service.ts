@@ -71,15 +71,18 @@ export class LectureService {
       where: { id: lectureId },
       relations: ['students'],
     });
-    console.log(lecture);
-    const newStudent = await this.userRepository.findOne({
+
+    const student = await this.userRepository.findOne({
       where: { id: studentId },
     });
-    console.log(newStudent);
 
-    lecture.students = [...lecture.students, newStudent];
+    console.log(student.point);
+    student.point = student.point - lecture.price;
+    console.log(student.point);
 
-    console.log(lecture);
+    lecture.students = [...lecture.students, student];
+
+    await this.userRepository.save(student);
     return this.lectureRepository.save(lecture);
   }
 
@@ -89,9 +92,17 @@ export class LectureService {
       where: { id: lectureId },
       relations: ['students'],
     });
+
+    const student = await this.userRepository.findOne({
+      where: { id: studentId },
+    });
+
     lecture.students = lecture.students.filter(
       (student) => student.id != studentId,
     );
+
+    student.point += lecture.price;
+    await this.userRepository.save(student);
 
     return this.lectureRepository.save(lecture);
   }
