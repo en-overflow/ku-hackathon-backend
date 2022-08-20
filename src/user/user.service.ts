@@ -46,9 +46,9 @@ export class UserService {
   async fetchOpenLectures(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['registerLectures'],
+      relations: ['openLectures'],
     });
-
+    console.log(user);
     return user.openLectures;
   }
 
