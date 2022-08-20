@@ -10,7 +10,7 @@ import {
 import { CreateUserDto, UpdateRoleDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('/api/user')
 export class UserController {
   constructor(private userService: UserService) {}
 
