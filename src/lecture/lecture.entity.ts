@@ -41,4 +41,7 @@ export class Lecture extends BaseEntity {
 
   //   @OneToMany((type) => User, (user) => user.registerLectures)
   //   student: User[];
+
+  //   @OneToMany((type) => Photo, (user) => photo.lectures)
+  //   student: Photo[];
 }
