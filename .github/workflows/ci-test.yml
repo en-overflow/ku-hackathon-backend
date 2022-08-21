@@ -1,0 +1,66 @@
+name: 테스트 실행
+
+# PR이 만들어졌거나 master 브랜치에 머지되어 올라갈 때 수행합니다.
+on:
+  push:
+    branches:.
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # MySQL 데몬을 띄웁니다.
+      # service container를 쓸 수도 있습니다.
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 7777
+          container port: 3306
+          mysql version: '5.7'
+          mysql database: testdb
+          mysql user: 'croquis_test'
+          mysql password: 'test_password'
+
+      # 소스를 가져옵니다.
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+                        ${{ runner.os }}-node-
+
+      # Node 14.x를 사용합니다.
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      # 모듈을 설치합니다.
+      - name: Install packages
+        run: npm ci
+
+      # 테스트를 수행합니다.
+      - name: Run unit test
+        run: npm run test
+
+      # 중간에 실패한 경우 슬랙으로 알려줍니다.
+      # GitHub 저장소나 조직의 Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.
+      - name: Notify failure
+        uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          status: ${{ job.status }}
+          username: github-actions
+          channel: '#github'
+        if: failure()
