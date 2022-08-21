@@ -4,8 +4,12 @@
 
 # Run backend Server
 
-`nest start`
+`npm run start`
 
 # Run backend server on watch mode
 
-`nest start:dev`
+`npm run start:dev`
+
+# Run unit testing
+
+`npm run test`
